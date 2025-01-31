@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # internal_apps
     'accounts',
+    'course',
     # external_apps
 ]
 
