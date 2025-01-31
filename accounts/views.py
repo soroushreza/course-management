@@ -70,3 +70,44 @@ class StudentLoginView(View):
             next_url = request.GET.get("next", "student_profile")
             return redirect(next_url)
         return render(request, self.template_name, {"form": form})
+
+
+class LogoutView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            logout(request)
+            messages.success(request, "با موفقییت خارج شدید!!")
+            return redirect("login")
+
+
+class PasswordResetView(View):
+    def get(self, request):
+        # اگر کاربر قبلاً احراز هویت شده، فرم تغییر رمز را نشان بده
+        if "reset_verified_user_id" in request.session:
+            form = PasswordResetForm()
+            return render(request, "accounts/password_reset_new.html", {"form": form})
+        # در غیر این صورت فرم تأیید هویت را نشان بده
+        form = PasswordResetVerifyForm()
+        return render(request, "accounts/password_reset_verify.html", {"form": form})
+
+    def post(self, request):
+        # اگر کاربر قبلاً احراز هویت شده، رمز جدید را ثبت کن
+        if "reset_verified_user_id" in request.session:
+            form = PasswordResetForm(request.POST)
+            if form.is_valid():
+                user = User.objects.get(id=request.session["reset_verified_user_id"])
+                user.set_password(form.cleaned_data["new_password"])
+                user.save()
+                # پاک کردن اطلاعات نشست
+                del request.session["reset_verified_user_id"]
+                messages.success(request, "رمز عبور با موفقیت تغییر کرد")
+                return redirect("login")
+            return render(request, "accounts/password_reset_new.html", {"form": form})
+        # در غیر این صورت اطلاعات کاربر را تأیید کن
+        form = PasswordResetVerifyForm(request.POST)
+        if form.is_valid():
+            user = form.cleaned_data["user"]
+            request.session["reset_verified_user_id"] = user.id
+            # نمایش فرم تغییر رمز
+            return redirect("password_reset")
+        return render(request, "accounts/password_reset_verify.html", {"form": form})
