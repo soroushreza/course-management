@@ -1,0 +1,43 @@
+{% extends "shared/base.html" %}
+
+{% block title %}ثبت نام حساب کاربری{% endblock title %}
+
+{% block main %}
+<div class="container">
+    <div class="signup-container">
+        <h2 class="text-center mb-4">ثبت نام دانشجو</h2>
+
+        <form method="post" class="bg-white shadow p-4 rounded">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-group">
+                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="invalid-feedback d-block">
+                            {{ field.errors.as_text }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <br>
+            <div class="d-flex justify-content-between align-items-center">
+                <button class="btn btn-primary" type="submit">ثبت نام</button>
+                <a class="text-decoration-none font-weight-bold text-primary" href="{% url 'login' %}">
+                    قبلاً ثبت نام کرده‌اید؟
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock main %}

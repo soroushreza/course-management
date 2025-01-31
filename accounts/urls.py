@@ -9,5 +9,4 @@ from .views import (
 urlpatterns = [
     path('register/', StudentRegistrationView.as_view(), name='register'),
     path('login/', StudentLoginView.as_view(), name='login'),
-
 ]
