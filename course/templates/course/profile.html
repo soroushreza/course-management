@@ -1,0 +1,52 @@
+{% extends 'shared/base.html' %}
+
+
+{% block title %}profile{% endblock title %}
+{% block main %}
+<div class="container py-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">مشخصات دانشجو</h3>
+        </div>
+        <div class="card-body">
+            <!-- اطلاعات غیرقابل تغییر -->
+            <div class="mb-4">
+                <h4 class="mb-3">اطلاعات پایه</h4>
+                {% for label, value in readonly_fields.items %}
+                    <div class="row mb-2">
+                        <div class="col-md-3 font-weight-bold">{{ label }}:</div>
+                        <div class="col-md-9">{{ value }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- اطلاعات قابل تغییر -->
+            <div class="mb-4">
+                <h4 class="mb-3">اطلاعات شخصی</h4>
+                <div class="row mb-2">
+                    <div class="col-md-3 font-weight-bold">نام:</div>
+                    <div class="col-md-9">{{ student.first_name }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-3 font-weight-bold">نام خانوادگی:</div>
+                    <div class="col-md-9">{{ student.last_name }}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-3 font-weight-bold">شماره تماس:</div>
+                    <div class="col-md-9">{% if student.phone_number %}{{ student.phone_number }}{% endif %}</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-3 font-weight-bold">رشته تحصیلی:</div>
+                    <div class="col-md-9">{{ student.major }}</div>
+                </div>
+            </div>
+
+            <div class="text-left">
+                <a href="{% url 'student_profile_edit' %}" class="btn btn-primary">
+                    ویرایش اطلاعات
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
