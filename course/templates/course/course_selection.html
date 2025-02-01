@@ -1,0 +1,73 @@
+{% extends "shared/base.html" %}
+
+{% block title %}انتخاب واحد{% endblock title %}
+
+{% block main %}
+<div class="container mt-4">
+    <h2 class="mb-4">انتخاب واحد</h2>
+    
+    <!-- جدول دروس انتخاب شده -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">دروس انتخاب شده</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped" id="enrolled-courses-table">
+                <thead>
+                    <tr>
+                        <th>کد درس</th>
+                        <th>نام درس</th>
+                        <th>تعداد واحد</th>
+                        <th>استاد</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody id="enrolled-courses-tbody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="units-info mb-3">
+        <p class="h5">
+            تعداد واحدهای انتخاب شده: 
+            <span id="total-units">0</span>
+            از
+            <span id="max-units">20</span>
+            واحد مجاز
+        </p>
+    </div>
+
+    <div class="mb-3">
+        <input type="text" id="search-input" class="form-control" placeholder="جستجو بر اساس نام یا کد درس..." autocomplete="off">
+    </div>
+    
+    <!-- فرم انتخاب دانشکده و جدول دروس -->
+    <div class="card">
+        <div class="card-body">
+            <form id="department-form">
+                {{ form.as_p }}
+            </form>
+            
+            <div id="courses-container" class="mt-4">
+                <table class="table" id="courses-table" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>کد درس</th>
+                            <th>نام درس</th>
+                            <th>واحد</th>
+                            <th>استاد</th>
+                            <th>ظرفیت</th>
+                            <th>روز و زمان ارائه</th>
+                            <th>تاریخ امتحان</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courses-tbody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

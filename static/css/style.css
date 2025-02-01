@@ -1,0 +1,123 @@
+.signup-container {
+    max-width: fit-content;
+    margin: auto;
+    padding-top: 40px;
+}
+
+.login-container {
+    max-width: fit-content;
+    margin: auto;
+    padding-top: 40px;
+}
+
+.password-reset-container {
+    max-width: fit-content;
+    margin: auto;
+    padding-top: 40px;
+}
+
+.nav-container {
+    width: fit-content;
+    margin: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.nav-item:hover .nav-link {
+    color: #007bff;
+    transition: color 0.3s ease-in-out;
+}
+
+.weekly-schedule {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.weekly-schedule th,
+.weekly-schedule td {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+    text-align: center;
+    min-width: 120px;
+}
+
+.weekly-schedule th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.time-slot {
+    font-weight: bold;
+    background-color: #f8f9fa;
+}
+
+.course-block {
+    padding: 4px;
+    border-radius: 4px;
+    margin: 2px 0;
+    font-size: 0.9em;
+}
+
+.schedule-cell {
+    position: relative;
+    min-height: 60px;
+    vertical-align: top;
+}
+
+.weekly-schedule {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.weekly-schedule th,
+.weekly-schedule td {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+    text-align: center;
+    min-width: 120px;
+}
+
+.weekly-schedule th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.time-slot {
+    font-weight: bold;
+    background-color: #f8f9fa;
+}
+
+.course-block {
+    padding: 4px;
+    border-radius: 4px;
+    margin: 2px 0;
+    font-size: 0.9em;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.course-block:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+.schedule-cell {
+    position: relative;
+    min-height: 60px;
+    vertical-align: top;
+}
+
+@media (max-width: 768px) {
+    .weekly-schedule {
+        font-size: 0.9em;
+    }
+    
+    .weekly-schedule td,
+    .weekly-schedule th {
+        padding: 4px;
+        min-width: 100px;
+    }
+    
+    .course-block {
+        font-size: 0.8em;
+    }
+}

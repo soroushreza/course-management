@@ -1,0 +1,84 @@
+{% extends "shared/base.html" %}
+
+{% block title %}برنامه هفتگی{% endblock title %}
+
+{% block main %}
+<div class="container mt-4">
+    <h2 class="mb-4">برنامه هفتگی</h2>
+    
+    <div class="table-responsive">
+        <table class="table table-bordered weekly-schedule">
+            <thead>
+                <tr>
+                    <th>ساعت/روز</th>
+                    {% for day_id, day_name in days %}
+                        <th>{{ day_name }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for time_slot in time_slots %}
+                    <tr>
+                        <td class="time-slot">{{ time_slot }}</td>
+                        {% for day_id, day_name in days %}
+                            <td class="schedule-cell" 
+                                data-day="{{ day_id }}" 
+                                data-time="{{ time_slot }}">
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const schedules = {{ schedules|safe }};
+        const cells = document.querySelectorAll('.schedule-cell');
+
+        function formatTime(timeStr) {
+            return timeStr.substr(0, 5);
+        }
+
+        function getRandomColor(courseName) {
+            let hash = 0;
+            for (let i = 0; i < courseName.length; i++) {
+                hash = courseName.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const hue = hash % 360;
+            return `hsl(${hue}, 70%, 85%)`;
+        }
+
+        schedules.forEach(schedule => {
+            const dayCells = document.querySelectorAll(
+                `[data-day="${schedule.day_of_week}"]`
+            );
+            dayCells.forEach(cell => {
+                if (cell.dataset.time === `${formatTime(schedule.start_time)} - ${formatTime(schedule.end_time)}`) {
+                    if (!cell.querySelector(`[data-course="${schedule.course.code}"]`)) {
+                        const courseBlock = document.createElement('div');
+                        courseBlock.className = 'course-block';
+                        courseBlock.style.backgroundColor = getRandomColor(schedule.course.name);
+                        courseBlock.setAttribute("data-course", schedule.course.code);
+                        courseBlock.innerHTML = `
+                            <strong>${schedule.course.name}</strong><br>
+                            <small>استاد: ${schedule.course.instructor}</small><br>
+                            <small>تاریخ امتحان: ${schedule.course.exam_date}</small><br>
+                            ${formatTime(schedule.start_time)} - ${formatTime(schedule.end_time)}<br>
+                            ${schedule.course.classroom}
+                        `;
+                        cell.appendChild(courseBlock);
+                    }
+                }
+            });
+        });
+    });
+</script>
+{% endblock extra_js %}
+
+
+
+{% endblock main %}
