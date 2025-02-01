@@ -1,0 +1,11 @@
+{% extends 'shared/base.html' %}
+
+{% block main %}
+<h1>افزودن زمان‌بندی برای درس: {{ course.name }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">ذخیره</button>
+    <a href="{% url 'course_detail' course.id %}" class="btn btn-secondary">لغو</a>
+</form>
+{% endblock %}

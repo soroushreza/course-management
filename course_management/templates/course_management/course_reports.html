@@ -1,0 +1,48 @@
+{% extends "shared/base.html" %}
+{% block main %}
+<div class="container">
+    <h2>گزارش درس‌ها</h2>
+    {% for data in course_data %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>{{ data.name }}</h3>
+        </div>
+        <div class="card-body">
+            <p>ظرفیت کل: {{ data.initial_capacity }}</p>
+            <p>ظرفیت باقی‌مانده: {{ data.capacity }}</p>
+            <p>تعداد دانشجویان ثبت‌نام شده: {{ data.enrolled_students }}</p>
+            
+            {% if data.enrollments %}
+            <h4>لیست دانشجویان:</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>نام و نام خانوادگی</th>
+                        <th>شماره دانشجویی</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for enrollment in data.enrollments %}
+                    <tr>
+                        <td>{{ enrollment.student.user.first_name }} {{ enrollment.student.user.last_name }}</td>
+                        <td>{{ enrollment.student.student_number }}</td>
+                        <td>
+                            <form method="post" action="{% url 'delete_enrollment' enrollment.id %}" 
+                                    onsubmit="return confirm('آیا از حذف این ثبت‌نام اطمینان دارید؟');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">حذف</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>هیچ دانشجویی در این درس ثبت‌نام نکرده است.</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
