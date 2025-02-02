@@ -1,0 +1,10 @@
+{% extends 'shared/base.html' %}
+
+{% block main %}
+<h1>ویرایش درس</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">ذخیره</button>
+</form>
+{% endblock %}

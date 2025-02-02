@@ -1,0 +1,15 @@
+{% extends 'shared/base.html' %}
+
+{% block main %}
+<div class="container">
+    <h2>اضافه کردن کلاس به درس {{ course.name }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-primary">ذخیره</button>
+        <a href="{% url 'course_detail' course.id %}" class="btn btn-secondary">انصراف</a>
+    </form>
+</div>
+{% endblock %}

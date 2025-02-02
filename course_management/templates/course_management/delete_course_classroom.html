@@ -1,0 +1,13 @@
+{% extends 'shared/base.html' %}
+
+{% block main %}
+<div class="container">
+    <h2>حذف کلاس از درس</h2>
+    <p>آیا مطمئن هستید که می‌خواهید کلاس "{{ course_classroom.classroom.name }}" را از درس "{{ course_classroom.course.name }}" حذف کنید؟</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">بله، حذف شود</button>
+        <a href="{% url 'course_detail' course_classroom.course.id %}" class="btn btn-secondary">انصراف</a>
+    </form>
+</div>
+{% endblock %}

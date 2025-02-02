@@ -1,0 +1,44 @@
+{% extends 'shared/base.html' %}
+
+{% block main %}
+<h1>مدیریت دروس</h1>
+<a href="{% url 'add_course' %}" class="btn btn-primary">افزودن درس جدید</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>کد درس</th>
+            <th>نام درس</th>
+            <th>تعداد واحد</th>
+            <th>دانشکده</th>
+            <th>کلاس ها</th>
+            <th>استاد</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for course in courses %}
+        <tr>
+            <td>{{ course.code }}</td>
+            <td>{{ course.name }}</td>
+            <td>{{ course.credits }}</td>
+            <td>{{ course.department.name }}</td>
+            {% for classes in course.course_classroom.all %}
+            <td>{{ classes.classroom.name }}</td>
+            {% endfor %}
+            <td>{{ course.instructor.first_name }} {{ course.instructor.last_name }}</td>
+            <td>
+                <a href="{% url 'edit_course' course.id %}" class="btn btn-warning">ویرایش</a>
+                <a href="{% url 'delete_course' course.id %}" class="btn btn-danger">حذف</a>
+                <a href="{% url 'course_detail' course.id %}" class="btn btn-info">جزئیات</a>
+                {% if not course.schedules.exists %}
+                <a href="{% url 'add_course_schedule' course.id %}" class="btn btn-primary">ایجاد جزییات درس</a>
+                {% else %}
+                    <a href="{% url 'edit_course_schedule' course.schedules.first.pk %}" class="btn btn-primary">ویرایش جزییات  ارایه درس</a>
+                    <a href="{% url 'delete_course_schedule' course.schedules.first.id %}" class="btn btn-primary">حذف جزییات  ارایه درس</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

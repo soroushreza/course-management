@@ -1,0 +1,15 @@
+{% extends "shared/base.html" %}
+{% block main %}
+<div class="container">
+    <h2>حذف ثبت نام</h2>
+    <p>آیا مطمئن هستید که می‌خواهید ثبت نام دانشجو 
+        "{{ enrollment.student.user.first_name }} {{ enrollment.student.user.last_name }}"
+        از درس "{{ enrollment.course.name }}" را حذف کنید؟
+    </p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">بله، حذف شود</button>
+        <a href="{% url 'course_reports' %}" class="btn btn-secondary">انصراف</a>
+    </form>
+</div>
+{% endblock %}
