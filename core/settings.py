@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # internal_apps
     'accounts',
     'course',
+    'course_management'
     # external_apps
 ]
 
